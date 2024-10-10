@@ -12,11 +12,14 @@ exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 def index():
     if request.method == 'POST':
         query = request.form.get('query')
+        selected_domains = request.form.getlist('domains')  # Retrieve selected domains from the form
+        
+        # Perform the search using the selected domains
         response = exa.search(
             query,
-            num_results=5,
+            num_results=10,
             type='keyword',
-            include_domains=['https://www.reddit.com'],
+            include_domains=selected_domains,  # Use selected domains
         )
         results = response.results
     else:
@@ -26,8 +29,3 @@ def index():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-
-

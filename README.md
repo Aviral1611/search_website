@@ -1,10 +1,10 @@
 # EXA Search App
 
-This is a Flask-based web application that allows users to search for keywords across multiple domains (like Reddit and StackOverflow) using the EXA API. The application includes features like dynamic search, customizable domain selection, and pretty search result displays with images.
+This is a Flask-based web application that allows users to search for keywords across multiple domains (like Reddit and StackOverflow) using the EXA API. The application includes features like dynamic search, customizable domain selection, and search results with urls.
 
 ## Features
 - Search across domains (Reddit, StackOverflow, etc.).
-- Display search results with titles, URLs, and images.
+- Display search results with titles, URLs.
 - Custom domain selection for users.
 - Responsive design with a dark theme.
 

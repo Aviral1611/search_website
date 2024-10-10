@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search App</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">EXA Reddit Search</h1>
+        <form method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="query" placeholder="Search here" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <hr>
+        {% if query %}
+            <h2>Results for "{{ query }}":</h2>
+            <ul class="list-group mt-4">
+                {% for result in results %}
+                    <li class="list-group-item">
+                        <h5>{{ result.title }}</h5>
+                        <a href="{{ result.url }}" target="_blank">{{ result.url }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

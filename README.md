@@ -65,7 +65,7 @@ Follow these steps to install and run the project locally:
 1. Enter a search query in the search bar.
 2. Select a domain to search (e.g., Reddit, StackOverflow).
 3. Click the "Search" button to retrieve results.
-4. The search results will display with clickable titles and URLs, along with any associated images.
+4. The search results will display with clickable titles and URLs.
 
 
 ## Contributing

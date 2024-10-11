@@ -32,6 +32,10 @@ h1 {
     font-size: 18px;
 }
 
+.btn-secondary {
+    background-color: #40444b;
+}
+
 .btn:hover {
     background-color: #5865f2;
 }

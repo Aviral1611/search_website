@@ -45,6 +45,16 @@
                     {% endfor %}
                 </ul>
             {% endif %}
+            <div class="col-md-4">
+                <h3>Your Search History</h3>
+                <ul class="list-group mt-4">
+                    {% for search in search_history %}
+                        <li class="list-group-item">
+                            <p>{{ search.query }} <small class="text-muted">({{ search.timestamp.strftime('%Y-%m-%d %H:%M:%S') }})</small></p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
     </body>
 {% endblock %}

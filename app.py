@@ -8,6 +8,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_migrate import Migrate
 
 
 load_dotenv()
@@ -21,15 +22,25 @@ exa = Exa(api_key=os.getenv("EXA_API_KEY"))
 
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message = "Please log in to access this page."
 login_manager.login_message_category = "info"
 
+class SearchHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Foreign key to link to User
+    query = db.Column(db.String(255), nullable=False)
+    timestamp = db.Column(db.DateTime, default=db.func.now())  # To store when the query was made
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String(150), nullable=False)
+    searches = db.relationship('SearchHistory', backref='user', lazy=True)
+
 
 with app.app_context():
     db.create_all()
@@ -49,6 +60,9 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
+
+
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -112,9 +126,14 @@ def index():
             include_domains=selected_domains,  # Use selected domains
         )
         results = response.results
+
+        new_search = SearchHistory(user_id=current_user.id, query=query)
+        db.session.add(new_search)
+        db.session.commit()
     else:
         query = None
         results = []
+    
     return render_template('index.html', query=query, results=results,title="Home")
 
 if __name__ == '__main__':
